@@ -1,0 +1,26 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/monitorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Monitor Name" />
+
+    <TextView
+        android:id="@+id/monitorIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP Address" />
+
+    <TextView
+        android:id="@+id/monitorPort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Port" />
+</LinearLayout>
