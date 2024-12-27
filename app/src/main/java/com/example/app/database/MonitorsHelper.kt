@@ -65,11 +65,13 @@ class MonitorsHelper(context:Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         return monitors
     }
 
-    fun deleteMonitor(monitorId: Int): Int {
+    fun deleteMonitor(name : String, ip: String, port: String, idUser: Int): Int {
         val db = writableDatabase
-        return db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(monitorId.toString()))
-    }
+        val whereClause = "$COLUMN_NAME = ? AND $COLUMN_IP = ? AND $COLUMN_PORT = ? AND $COLUMN_ID_USER = ?"
+        val whereArgs = arrayOf(name , ip, port, idUser.toString())
 
+        return db.delete(TABLE_NAME, whereClause, whereArgs)
+    }
 
 
 }

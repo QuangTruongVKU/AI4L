@@ -1,10 +1,12 @@
 package com.example.app.Fragment
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,7 +61,30 @@ class HomeFragment : Fragment() {
         }
 
         setupButtons()
+
+        val searchEditText = binding.editSearch
+        val searchButton = binding.buttonSearch
+        searchButton.setOnClickListener {
+            val searchText = searchEditText.text.toString()
+            val filteredTitles = titles.filter { it.contains(searchText, ignoreCase = true) }
+            val filteredDescriptions = descriptions.filterIndexed { index, _ -> filteredTitles.contains(titles[index]) }
+            val filteredImages = images.filterIndexed { index, _ -> filteredTitles.contains(titles[index]) }
+            val filteredLinks = links.filterIndexed { index, _ -> filteredTitles.contains(titles[index]) }
+            val adapter = NewsAdapter(filteredTitles, filteredDescriptions, filteredImages, filteredLinks)
+            binding.NewsRecycler.layoutManager = LinearLayoutManager(requireContext())
+            binding.NewsRecycler.adapter = adapter
+        }
+        hideKeyboard()
+        searchEditText.clearFocus()
+
     }
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireActivity().currentFocus ?: View(requireContext()) // Lấy view hiện tại
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+
 
     // Hàm crawl tin tức và lưu vào database (chỉ chạy một lần)
     private suspend fun fetchAndStoreNews() {

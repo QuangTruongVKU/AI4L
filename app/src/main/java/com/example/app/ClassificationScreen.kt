@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -29,7 +30,7 @@ class ClassificationScreen : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_classification_screen)
 
-        val btnBack = findViewById<ImageButton>(R.id.imageButton)
+        val btnBack = findViewById<Button>(R.id.imageButton)
         btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

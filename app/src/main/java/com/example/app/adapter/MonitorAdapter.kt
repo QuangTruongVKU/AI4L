@@ -48,4 +48,6 @@ class MonitorAdapter(private val monitorList: List<Monitor>) :
     }
 
     override fun getItemCount(): Int = monitorList.size
+
+
 }

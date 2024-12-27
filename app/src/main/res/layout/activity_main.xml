@@ -22,31 +22,6 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <EditText
-        android:id="@+id/editSearch"
-        android:layout_width="263dp"
-        android:layout_height="34dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_input"
-        android:ems="10"
-        android:hint="Tìm kiếm"
-        android:inputType="text"
-        android:paddingLeft="16sp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
-        app:layout_constraintStart_toEndOf="@+id/buttonSearch"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/buttonSearch"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="24dp"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search" />
 
     <fragment
         android:id="@+id/fragmentContainerView3"
@@ -59,22 +34,10 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSearch"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/navigation" />
 
-    <ImageButton
-        android:id="@+id/buttonCamera"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/custom_button"
-        android:elevation="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_camera_ai" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

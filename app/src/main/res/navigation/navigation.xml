@@ -14,4 +14,9 @@
         android:name="com.example.app.Fragment.MonitorFragment"
         android:label="fragment_monitor"
         tools:layout="@layout/fragment_monitor" />
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.app.Fragment.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

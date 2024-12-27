@@ -48,11 +48,11 @@ class CassificationDataHelper(context : Context) : SQLiteOpenHelper(context, DAT
                     "- Môi trường ẩm ướt, mật độ chăn nuôi cao là yếu tố thuận lợi để bệnh bùng phát.'" +
                     ", 'Bệnh cầu trùng gà có hai dạng chính: cầu trùng manh tràng và cầu trùng ruột non, " +
                     "đôi khi cả hai thể cùng xảy ra đồng thời.\n\n" +
-                    "**Cầu trùng manh tràng:**\n" +
+                    "<b>Cầu trùng manh tràng:<b>\n" +
                     "- Thường xảy ra ở gà từ 3 đến 7 tuần tuổi (khá phổ biến).\n" +
                     "- Gà có biểu hiện kêu nhiều, ăn ít, uống nước nhiều.\n" +
                     "- Gà xệ cánh, xù lông, đi phân sệt có màu đỏ nâu, phân gà sáp hoặc có máu tươi.\n\n" +
-                    "**Cầu trùng ruột non (tá tràng):**\n" +
+                    "<b>Cầu trùng ruột non (tá tràng):<b>\n" +
                     "- Thường gặp ở gà giò.\n" +
                     "- Gà bị viêm ruột, tiêu chảy thất thường.\n" +
                     "- Phân có lẫn máu màu nâu sậm (phân gà sáp) hoặc đôi khi thấy máu tươi.'," +
@@ -96,7 +96,7 @@ class CassificationDataHelper(context : Context) : SQLiteOpenHelper(context, DAT
                     "- Chủng gây bệnh cho gia cầm: Gallinarum và Pullorum gây thương hàn gà.\n" +
                     "- Chủng gây bệnh cho người: Enteritidis, Typhimurium, Infantis, Senftenberg.\n', " +
                     "'-Do vi khuẩn Salmonella pullorum gây bệnh bạch lỵ và Salmonella gallinarum gây bệnh thương hàn.\n" +
-                     "-Lây truyền qua trứng từ gà mẹ nhiễm bệnh hoặc qua tiếp xúc với phân, thức ăn, nước uống bị nhiễm vi khuẩn.\\', " +
+                     "-Lây truyền qua trứng từ gà mẹ nhiễm bệnh hoặc qua tiếp xúc với phân, thức ăn, nước uống bị nhiễm vi khuẩn.\n', " +
                     "'-Kém ăn bỏ ăn, lông xù, sã cánh ỉa  chảy phân xanh, phân vàng, mào thâm.\n" +
                     "-Chảy nước mắt nước mũi.\n" +
                     "-Diều càng phồng nước và thức ăn, khi dốc ngược gà xuống dưới thấy có nước chảy ra.\n', " +

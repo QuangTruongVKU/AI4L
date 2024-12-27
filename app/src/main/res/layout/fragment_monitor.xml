@@ -12,25 +12,85 @@
 
         <ImageButton
             android:id="@+id/btnAddMonitor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="76dp"
             android:src="@android:drawable/ic_input_add"
             app:layout_constraintEnd_toEndOf="@+id/recyclerViewMonitors"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.943"
             app:layout_constraintStart_toStartOf="@+id/recyclerViewMonitors"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewMonitors" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMonitors"
-            android:layout_width="346dp"
-            android:layout_height="367dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="410dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_monitor" />
+
+        <EditText
+            android:id="@+id/editNameCamera"
+            android:layout_width="225dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="Tên camera"
+            android:inputType="text"
+            android:paddingLeft="16sp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddMonitor"
+            app:layout_constraintHorizontal_bias="0.793"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewMonitors" />
+
+        <EditText
+            android:id="@+id/editIPCamera"
+            android:layout_width="225dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="IP camera"
+            android:inputType="text"
+            android:paddingLeft="16sp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/editNameCamera"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editNameCamera"
+            app:layout_constraintTop_toBottomOf="@+id/editNameCamera" />
+
+        <EditText
+            android:id="@+id/editHostCamera"
+            android:layout_width="225dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_input"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="Host camera"
+            android:inputType="text"
+            android:paddingLeft="16sp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/editIPCamera"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toStartOf="@+id/editIPCamera"
+            app:layout_constraintTop_toBottomOf="@+id/editIPCamera" />
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="50dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="12dp"
+            android:src="@android:drawable/button_onoff_indicator_on"
+            app:layout_constraintStart_toStartOf="@+id/btnAddMonitor"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddMonitor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
