@@ -36,6 +36,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    aaptOptions{
+        noCompress("tflite")
+    }
 }
 dependencies {
 
@@ -54,6 +58,7 @@ dependencies {
     implementation ("org.tensorflow:tensorflow-lite:2.13.0")
     implementation ("org.tensorflow:tensorflow-lite-gpu:2.12.0")
     implementation ("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation (libs.libvlc.all)
     implementation (libs.exoplayer.v2190)
 //    implementation ("com.github.WritingMinds:FFmpeg-Android:1.1.2")
 //    implementation ("org.ksoap2:ksoap2-android:3.6.4")

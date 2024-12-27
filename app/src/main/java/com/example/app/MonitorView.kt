@@ -159,19 +159,32 @@ class MonitorView : AppCompatActivity() {
     }
 
     private fun classifyObjects(detectedBoxes: MutableList<Triple<RectF, Float, String>>, bitmap: Bitmap) {
-        detectedBoxes.forEachIndexed { index, box ->
-            try {
-                val croppedBitmap = cropBitmap(bitmap, box.first)
-                val classificationInput = preprocessImageForClassification(croppedBitmap)
-                val classificationOutput = Array(1) { FloatArray(10) }
-                classificationModel.run(classificationInput, classificationOutput)
-                val classIndex = classificationOutput[0].withIndex().maxByOrNull { it.value }?.index ?: -1
-                detectedBoxes[index] = box.copy(third = "Class $classIndex") // Updating the label to include class index
-            } catch (e: Exception) {
-                Log.e("MonitorView", "Error cropping bitmap: ${e.message}")
+        // Chạy trong một luồng nền
+        Thread {
+            detectedBoxes.forEachIndexed { index, box ->
+                try {
+                    val croppedBitmap = cropBitmap(bitmap, box.first)
+                    val classificationInput = preprocessImageForClassification(croppedBitmap)
+                    val classificationOutput = Array(1) { FloatArray(10) }
+                    classificationModel.run(classificationInput, classificationOutput)
+                    val classIndex = classificationOutput[0].withIndex().maxByOrNull { it.value }?.index ?: -1
+//                   lấy tên bệnh trong label.txt
+                    val labelFile = FileUtil.loadLabels(this, "label.txt")
+                    val label = labelFile[classIndex]
+                    detectedBoxes[index] = Triple(box.first, box.second, label)
+                    
+                } catch (e: Exception) {
+                    Log.e("MonitorView", "Error during classification: ${e.message}")
+                }
             }
-        }
+
+            // Cập nhật UI trong luồng chính
+            runOnUiThread {
+                overlayView.updateBoxes(detectedBoxes)
+            }
+        }.start()
     }
+
 
 
     private fun cropBitmap(bitmap: Bitmap, rect: RectF): Bitmap {
@@ -190,11 +203,19 @@ class MonitorView : AppCompatActivity() {
         classificationModel = Interpreter(classificationModelFile, Interpreter.Options().apply { setNumThreads(4) })
     }
 
+    private fun recycleBitmap(bitmap: Bitmap) {
+        if (!bitmap.isRecycled) {
+            bitmap.recycle()
+        }
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
         isStreaming = false
         playerView.player?.release()
         detectionModel.close()
         classificationModel.close()
+//        recycleBitmap(surfaceView.bitmap)
     }
 }

@@ -30,12 +30,15 @@ class OverlayView @JvmOverloads constructor(
         detectedBoxes.addAll(boxes)
         invalidate() // Refresh view
     }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (box in detectedBoxes) {
             canvas.drawRect(box.first, paint)
-            canvas.drawText(box.third, box.first.left, box.first.top - 10, textPaint)
+            val yPosition = box.first.top - 10f
+            if (yPosition > 0) {
+                canvas.drawText(box.third, box.first.left, yPosition, textPaint)
+            }
         }
     }
+
 }

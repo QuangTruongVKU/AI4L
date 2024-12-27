@@ -32,7 +32,7 @@ class ResultAdapter(
 
         fun bind(title: String, description: String) {
             binding.textTitle.text = title // Hiển thị tiêu đề
-            binding.textDescribe.text = Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT) // Hiển thị mô tả
+            binding.textDescribe.text = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY) // Hiển thị mô tả
 
         }
     }

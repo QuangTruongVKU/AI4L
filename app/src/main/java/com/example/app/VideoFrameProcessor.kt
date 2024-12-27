@@ -19,6 +19,7 @@ class VideoFrameProcessor(private val player: ExoPlayer) {
     private lateinit var surface: Surface
     private var videoWidth: Int = 0
     private var videoHeight: Int = 0
+    private var textureId: Int = 0  // ID cho texture OpenGL
 
     init {
         // Cấu hình ExoPlayer để lấy frame video
@@ -36,8 +37,13 @@ class VideoFrameProcessor(private val player: ExoPlayer) {
             }
         })
 
-        // Tạo SurfaceTexture và Surface từ Texture ID OpenGL
-        surfaceTexture = SurfaceTexture(0) // Tạo một SurfaceTexture mới với Texture ID
+        // Tạo một OpenGL Texture ID hợp lệ
+        val textureIds = IntArray(1)
+        GLES20.glGenTextures(1, textureIds, 0)
+        textureId = textureIds[0]
+
+        // Khởi tạo SurfaceTexture với Texture ID hợp lệ
+        surfaceTexture = SurfaceTexture(textureId)
         surface = Surface(surfaceTexture)
 
         player.setVideoSurface(surface)  // Kết nối ExoPlayer với Surface
@@ -61,6 +67,12 @@ class VideoFrameProcessor(private val player: ExoPlayer) {
         val buffer = ByteBuffer.allocateDirect(4 * videoWidth * videoHeight * 3)
         buffer.order(ByteOrder.nativeOrder())  // Đảm bảo ByteOrder là native order
 
+        // Kiểm tra OpenGL context trước khi đọc pixel
+        if (GLES20.glGetError() != GLES20.GL_NO_ERROR) {
+            // Lỗi context OpenGL
+            return null
+        }
+
         // Đọc dữ liệu từ SurfaceTexture (cần OpenGL context)
         glReadPixels(0, 0, videoWidth, videoHeight, GL_RGBA, GL_UNSIGNED_BYTE, buffer)
 
@@ -83,7 +95,11 @@ class VideoFrameProcessor(private val player: ExoPlayer) {
     // Phương thức OpenGL để lấy dữ liệu pixel từ SurfaceTexture
     private fun glReadPixels(x: Int, y: Int, width: Int, height: Int, format: Int, type: Int, buffer: ByteBuffer) {
         GLES20.glReadPixels(x, y, width, height, format, type, buffer)
+
+        // Kiểm tra lỗi sau khi gọi glReadPixels
+        if (GLES20.glGetError() != GLES20.GL_NO_ERROR) {
+            // Lỗi khi đọc pixels
+            buffer.clear()  // Dọn dẹp buffer
+        }
     }
 }
-
-
