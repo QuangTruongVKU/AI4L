@@ -22,6 +22,7 @@ class MonitorView : AppCompatActivity() {
     private lateinit var playerView: PlayerView
     private lateinit var detectionModel: Interpreter
     private lateinit var classificationModel: Interpreter
+    private lateinit var overlayView: OverlayView
     private lateinit var surfaceView: SurfaceView
     private var isStreaming = true
 
@@ -55,6 +56,7 @@ class MonitorView : AppCompatActivity() {
         surfaceHolder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 player.setVideoSurface(holder.surface)
+
             }
 
             override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
@@ -63,26 +65,21 @@ class MonitorView : AppCompatActivity() {
                 player.setVideoSurface(null)
             }
         })
-
         val videoFrameProcessor = VideoFrameProcessor(player)
         videoFrameProcessor.setFrameListener { bitmap ->
             processFrame(bitmap)
         }
+
     }
 
     private fun processFrame(bitmap: Bitmap) {
         val detectedBoxes = detectObjects(bitmap)
         classifyObjects(detectedBoxes.toMutableList(), bitmap)
 
-        val scaledBoxes = scaleBoxes(detectedBoxes, bitmap)
-
-        // Cập nhật bounding boxes trong OverlayView
         runOnUiThread {
-            val overlayView = findViewById<OverlayView>(R.id.overlayView)
-            overlayView.setDetectedBoxes(scaledBoxes)
+            overlayView.updateBoxes(detectedBoxes)
         }
     }
-
 
     private fun scaleBoxes(
         boxes: List<Triple<RectF, Float, String>>,
@@ -108,51 +105,6 @@ class MonitorView : AppCompatActivity() {
             Triple(scaledRect, box.second, box.third)
         }
     }
-
-    //    // Update the canvas drawing to use overlayView
-    //        private fun updateFrame(frame: Bitmap, detectedBoxes: List<Triple<RectF, Float, String>>) {
-    //        // Scale bounding boxes if necessary
-    //        val scaledBoxes = scaleBoxes(detectedBoxes, frame)
-    //
-    //        // Update OverlayView with the current bounding boxes
-    //        runOnUiThread {
-    //            val overlayView = findViewById<OverlayView>(R.id.overlayView)
-    //            overlayView.setDetectedBoxes(scaledBoxes)
-    //        }
-    //
-    //        // Optionally, update any other UI components like the player view
-    //        val playerView = findViewById<PlayerView>(R.id.playView)
-    //        playerView.setAspectRatio(frame.width.toFloat() / frame.height.toFloat())
-    //    }
-    //
-    //
-    //    private fun drawOverlay(
-    //        canvas: Canvas,
-    //        detectedBoxes: List<Triple<RectF, Float, String>>
-    //    ) {
-    //        val paint = Paint().apply {
-    //            color = Color.RED
-    //            strokeWidth = 5f
-    //            style = Paint.Style.STROKE
-    //        }
-    //        val textPaint = Paint().apply {
-    //            color = Color.YELLOW
-    //            textSize = 30f
-    //            style = Paint.Style.FILL
-    //        }
-    //
-    //        detectedBoxes.forEach { box ->
-    //            val rect = box.first
-    //            // Log the bounding box coordinates to check if they are within the visible canvas
-    //            println("Bounding box: Left: ${rect.left}, Top: ${rect.top}, Right: ${rect.right}, Bottom: ${rect.bottom}")
-    //
-    //            // Draw the bounding box rectangle
-    //            canvas.drawRect(rect, paint)
-    //            // Draw the label text above the bounding box (class name or label)
-    //            canvas.drawText(box.third, rect.left, rect.top - 10, textPaint) // box.third contains the class name
-    //        }
-    //    }
-    //
 
 
 

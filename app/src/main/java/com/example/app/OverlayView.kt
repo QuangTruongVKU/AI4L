@@ -1,40 +1,41 @@
-    package com.example.app
+package com.example.app
 
-    import android.content.Context
-    import android.graphics.*
-    import android.util.AttributeSet
-    import android.view.View
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
+import android.util.AttributeSet
+import android.view.View
 
-    class OverlayView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-        private var detectedBoxes: List<Triple<RectF, Float, String>> = listOf()
+class OverlayView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
-        // Cập nhật bounding boxes cần vẽ
-        fun setDetectedBoxes(boxes: List<Triple<RectF, Float, String>>) {
-            detectedBoxes = boxes
-            invalidate() // Yêu cầu vẽ lại View
-        }
+    private val detectedBoxes = mutableListOf<Triple<RectF, Float, String>>()
+    private val paint = Paint().apply {
+        color = android.graphics.Color.RED
+        style = Paint.Style.STROKE
+        strokeWidth = 5f
+    }
+    private val textPaint = Paint().apply {
+        color = android.graphics.Color.YELLOW
+        textSize = 30f
+        style = Paint.Style.FILL
+    }
 
-        // Override onDraw để vẽ bounding boxes lên View
-        override fun onDraw(canvas: Canvas) {
-            super.onDraw(canvas)
+    fun updateBoxes(boxes: List<Triple<RectF, Float, String>>) {
+        detectedBoxes.clear()
+        detectedBoxes.addAll(boxes)
+        invalidate() // Refresh view
+    }
 
-            val paint = Paint().apply {
-                color = Color.RED
-                strokeWidth = 5f
-                style = Paint.Style.STROKE
-            }
-            val textPaint = Paint().apply {
-                color = Color.YELLOW
-                textSize = 30f
-                style = Paint.Style.FILL
-            }
-
-            detectedBoxes.forEach { box ->
-                val rect = box.first
-                // Vẽ bounding box
-                canvas.drawRect(rect, paint)
-                // Vẽ label bên trên bounding box
-                canvas.drawText(box.third, rect.left, rect.top - 10, textPaint)
-            }
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        for (box in detectedBoxes) {
+            canvas.drawRect(box.first, paint)
+            canvas.drawText(box.third, box.first.left, box.first.top - 10, textPaint)
         }
     }
+}
