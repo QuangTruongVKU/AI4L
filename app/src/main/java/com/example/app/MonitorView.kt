@@ -35,7 +35,7 @@ class MonitorView : AppCompatActivity() {
 
         val monitorIp = intent.getStringExtra("monitorIp") ?: ""
         val monitorPort = intent.getStringExtra("monitorPort") ?: "554"
-        val rtspUrl = "rtsp://$monitorIp:$monitorPort/h264_ulaw.sdp"
+        val rtspUrl = "rtsp://${monitorIp}:${monitorPort}/h624.sdp"
 
         initModels()
 
@@ -172,7 +172,7 @@ class MonitorView : AppCompatActivity() {
                     val labelFile = FileUtil.loadLabels(this, "label.txt")
                     val label = labelFile[classIndex]
                     detectedBoxes[index] = Triple(box.first, box.second, label)
-                    
+
                 } catch (e: Exception) {
                     Log.e("MonitorView", "Error during classification: ${e.message}")
                 }
